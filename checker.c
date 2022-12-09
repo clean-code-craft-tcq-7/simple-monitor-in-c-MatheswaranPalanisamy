@@ -7,10 +7,5 @@ int batteryIsOk(float temperature, float soc, float chargeRate)
   int soc_ret_val = checkSocRange(soc);
   int charge_rate_ret_val = checkChargeRateRange(chargeRate);
 
-  if(temperature_ret_val == 1 && soc_ret_val == 1 && charge_rate_ret_val == 1)
-  {
-    return 1;
-  }
-
-  return 0;
+  return temperature_ret_val & soc_ret_val & charge_rate_ret_val;
 }
