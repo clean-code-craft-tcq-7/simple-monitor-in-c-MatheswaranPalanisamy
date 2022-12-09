@@ -1,15 +1,19 @@
 #include <stdio.h>
+#include "checker_common.h"
 #include "checker_functions.h"
 
-int batteryIsOk(float temperature, float soc, float chargeRate) 
+returnCode batteryIsOk(float temperature, float soc, float chargeRate) 
 {
-  if(checkTemperatureRange(temperature))
+  returnCode return_code = RET_SUCCESS;
+  return_code = checkTemperatureRange(temperature);
+  if(return_code == RET_SUCCESS)
   {
-    if(checkSocRange(soc))
+    return_code = checkSocRange(soc);
+    if(return_code == RET_SUCCESS)
     {
       return checkChargeRateRange(chargeRate);
     }
   }
 
-  return 0;
+  return return_code;
 }
