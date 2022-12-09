@@ -1,40 +1,42 @@
 #include <stdio.h>
+#include "checker_common.h"
+#include "checker_functions.h"
 
 void printError(const char *error_string)
 {
     printf("%s\n", error_string);
 }
 
-int checkTemperatureRange(float temperature)
+returnCode checkTemperatureRange(float temperature)
 {
   if(temperature < 0 || temperature > 45) 
   {
     printError("Temperature out of range!");
-    return 0;
+    return RET_TEMP_ERROR;
   }
 
-  return 1;
+  return RET_SUCCESS;
 }
 
-int checkSocRange(float soc)
+returnCode checkSocRange(float soc)
 {
   if(soc < 20 || soc > 80) 
   {
     printError("State of Charge out of range!");
-    return 0;
+    return RET_SOC_ERROR;
   }
 
-  return 1;
+  return RET_SUCCESS;
 }
 
-int checkChargeRateRange(float chargeRate)
+returnCode checkChargeRateRange(float chargeRate)
 {
   if(chargeRate > 0.8) 
   {
     printError("Charge Rate out of range!");
-    return 0;
+    return RET_CHRG_RATE_ERROR;
   }
 
-  return 1;
+  return RET_SUCCESS;
 }
 
