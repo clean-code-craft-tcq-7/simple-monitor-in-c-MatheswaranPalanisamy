@@ -2,41 +2,55 @@
 #include "checker_common.h"
 #include "checker_functions.h"
 
+const float minTemperatureRange = 0;
+const float maxTemperatureRange = 45;
+const float minSocRange = 20;
+const float maxSocRange = 80;
+const float maxChargeRateRange = 0.8;
+
 void printError(const char *error_string)
 {
     printf("%s\n", error_string);
 }
 
-returnCode checkTemperatureRange(float temperature)
+int checkOutOfRange(float value, float minVal, float maxVal)
 {
-  if(temperature < 0 || temperature > 45) 
+  if(value < minVal || value > maxVal)
+  {
+    return 1;
+  }
+
+  return 0;
+}
+
+int checkTemperatureRange(float temperature)
+{
+  if(checkOutOfRange(temperature, minTemperatureRange, maxTemperatureRange))
   {
     printError("Temperature out of range!");
-    return RET_TEMP_ERROR;
+    return 0;
   }
-
-  return RET_SUCCESS;
+  return 1;
 }
 
-returnCode checkSocRange(float soc)
+int checkSocRange(float soc)
 {
-  if(soc < 20 || soc > 80) 
+  if(checkOutOfRange(soc, minSocRange, maxSocRange))
   {
     printError("State of Charge out of range!");
-    return RET_SOC_ERROR;
+    return 0;
   }
 
-  return RET_SUCCESS;
+  return 1;
 }
 
-returnCode checkChargeRateRange(float chargeRate)
+int checkChargeRateRange(float chargeRate)
 {
-  if(chargeRate > 0.8) 
+  if(chargeRate > maxChargeRateRange) 
   {
     printError("Charge Rate out of range!");
-    return RET_CHRG_RATE_ERROR;
+    return 0;
   }
 
-  return RET_SUCCESS;
+  return 1;
 }
-

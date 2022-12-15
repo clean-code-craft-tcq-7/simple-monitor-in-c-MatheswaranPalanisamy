@@ -1,1 +1,1 @@
-returnCode batteryIsOk(float temperature, float soc, float chargeRate) ;
+int batteryIsOk(float temperature, float soc, float chargeRate) ;

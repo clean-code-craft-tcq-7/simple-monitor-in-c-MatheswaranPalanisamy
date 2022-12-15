@@ -1,4 +1,4 @@
 
-returnCode checkTemperatureRange(float temperature);
-returnCode checkSocRange(float soc);
-returnCode checkChargeRateRange(float chargeRate);
+int checkTemperatureRange(float temperature);
+int checkSocRange(float soc);
+int checkChargeRateRange(float chargeRate);
