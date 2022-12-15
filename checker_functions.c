@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "checker_common.h"
 #include "checker_functions.h"
 
 const float minTemperatureRange = 0;

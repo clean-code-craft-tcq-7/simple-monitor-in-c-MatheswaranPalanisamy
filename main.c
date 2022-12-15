@@ -1,5 +1,4 @@
 #include <assert.h>
-#include "checker_common.h"
 #include "checker.h"
 #include "checker_functions.h"
 

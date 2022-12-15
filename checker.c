@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "checker_common.h"
 #include "checker_functions.h"
 
 int batteryIsOk(float temperature, float soc, float chargeRate) 
