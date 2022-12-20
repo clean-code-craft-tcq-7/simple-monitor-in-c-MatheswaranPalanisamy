@@ -14,7 +14,7 @@ static int checkRange(float value, float minVal, float maxVal)
   return 0;
 }
 
-static limitType_en findValueRange(float value, limits_st *limits)
+static limitType_en findValueRange(float value, const limits_st *limits)
 {
   int limitCnt = 0;
   for(limitCnt = 0; limitCnt < BMS_MAX_LIMITS; limitCnt++)
@@ -31,11 +31,11 @@ static limitType_en findValueRange(float value, limits_st *limits)
 int checkAndAlertParameters(float *parameters, void (*alerter)(limitCategory_en, char *))
 {
   int paramCount;
-  limits_st *paramLimits;
+  const limits_st *paramLimits;
   limitType_en limitType;
   for(paramCount = 0; paramCount < BMS_MAX_PARAMTERS; paramCount++)
   {
-    paramLimits = (limits_st *)checkerDatabase[paramCount].limits;
+    paramLimits = checkerDatabase[paramCount].limits;
     limitType = findValueRange(parameters[paramCount], paramLimits);
     alertLimit(paramCount, limitType, alerter);
 
@@ -46,40 +46,3 @@ int checkAndAlertParameters(float *parameters, void (*alerter)(limitCategory_en,
   }
   return 1;
 }
-
-/*
-int checkTemperatureRange(float temperature)
-{
-  limitType_en limitType = findValueRange(temperature, (limits_st *)Bms_TemperatureLimits);
-
-  if(Bms_TemperatureLimits[limitType].limitCategory == BMS_ERROR)
-  {
-    return 0;
-  }
-
-  return 1;
-}
-
-int checkSocRange(float soc)
-{
-  limitType_en limitType = findValueRange(soc, (limits_st *)Bms_SocLimits);
-
-  if(Bms_SocLimits[limitType].limitCategory == BMS_ERROR)
-  {
-    return 0;
-  }
-
-  return 1;
-}
-
-int checkChargeRateRange(float chargeRate)
-{
-  limitType_en limitType = findValueRange(chargeRate, (limits_st *)Bms_ChargeLimits);
-
-  if(Bms_ChargeLimits[limitType].limitCategory == BMS_ERROR)
-  {
-    return 0;
-  }
-
-  return 1;
-}*/

@@ -7,7 +7,7 @@
 
 static limitCategory_en findAlertCategory(bmsParameterType_en paramType, limitType_en limitType)
 {
-    limits_st *paramLimits = (limits_st *)checkerDatabase[paramType].limits;
+    const limits_st *paramLimits = checkerDatabase[paramType].limits;
     limitCategory_en limitCategory = BMS_VALID;
 
     if(limitType != BMS_LIMIT_VALID)
