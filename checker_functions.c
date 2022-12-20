@@ -48,7 +48,6 @@ int checkAndAlertParameters(float *parameters, void (*alerter)(limitCategory_en,
   for(paramCount = 0; paramCount < BMS_MAX_PARAMTERS; paramCount++)
   {
     paramLimits = checkerDatabase[paramCount].limits;
-    printf("parameter limit for %d is %p\n", paramCount, paramLimits);
     limitType = findValueRange(parameters[paramCount], paramLimits);
     alertLimit(paramCount, limitType, alerter);
 

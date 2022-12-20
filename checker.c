@@ -26,11 +26,9 @@ bmsChecker_st checkerDatabase[BMS_MAX_PARAMTERS] = {
 int checkerInit(languages_en language, int *warningEnable)
 {
   int paramCount = 0;
-      printf("Input Addresses : %p, %p, %p\n", Bms_ChargeLimits, Bms_SocLimits, Bms_TemperatureLimits);
 
   for(paramCount = 0; paramCount < BMS_MAX_PARAMTERS; paramCount++)
   {
-    printf("Addresses %p\n", checkerDatabase[paramCount].limits);
     // select Language
     checkerDatabase[paramCount].language = language;
     // Enable or disable warning  levels
@@ -43,7 +41,6 @@ int checkerInit(languages_en language, int *warningEnable)
 int batteryIsOk(float temperature, float soc, float chargeRate, void (*alerter)(limitCategory_en, char *)) 
 {
   float parameterArray[BMS_MAX_PARAMTERS] = {temperature, soc, chargeRate};
-  printf("Inputs : %f, %f, %f\n", temperature, soc, chargeRate);
  
   return checkAndAlertParameters(parameterArray, alerter);
 }
