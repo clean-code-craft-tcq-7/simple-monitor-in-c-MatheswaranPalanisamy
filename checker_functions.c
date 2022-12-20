@@ -1,20 +1,12 @@
 #include <stdio.h>
-#include "checker_functions.h"
 
-const float minTemperatureRange = 0;
-const float maxTemperatureRange = 45;
-const float minSocRange = 20;
-const float maxSocRange = 80;
-const float maxChargeRateRange = 0.8;
+#include "bms_common.h"
+#include "bms_limits.h"
+#include "bms_alerter.h"
 
-void printError(const char *error_string)
+static int checkRange(float value, float minVal, float maxVal)
 {
-    printf("%s\n", error_string);
-}
-
-int checkOutOfRange(float value, float minVal, float maxVal)
-{
-  if(value < minVal || value > maxVal)
+  if(value >= minVal && value < maxVal)
   {
     return 1;
   }
@@ -22,21 +14,58 @@ int checkOutOfRange(float value, float minVal, float maxVal)
   return 0;
 }
 
+static limitType_en findValueRange(float value, limits_st *limits)
+{
+  int limitCnt = 0;
+  for(limitCnt = 0; limitCnt < BMS_MAX_LIMITS; limitCnt++)
+  {
+    if(checkRange(value, limits[limitCnt].minVal, limits[limitCnt].maxVal))
+    {
+      return (limitType_en)limitCnt;
+    }
+  }
+
+  return BMS_LIMIT_VALID;
+}
+
+int checkAndAlertParameters(float *parameters, void (*alerter)(limitCategory_en, char *))
+{
+  int paramCount;
+  limits_st *paramLimits;
+  limitType_en limitType;
+  for(paramCount = 0; paramCount < BMS_MAX_PARAMTERS; paramCount++)
+  {
+    paramLimits = (limits_st *)Bms_limitsDataBase[paramCount];
+    limitType = findValueRange(parameters[paramCount], paramLimits);
+    alertLimit(paramCount, limitType, alerter);
+
+    if(paramLimits[limitType].limitCategory == BMS_ERROR)
+    {
+      return 0;
+    }
+  }
+  return 1;
+}
+
+/*
 int checkTemperatureRange(float temperature)
 {
-  if(checkOutOfRange(temperature, minTemperatureRange, maxTemperatureRange))
+  limitType_en limitType = findValueRange(temperature, (limits_st *)Bms_TemperatureLimits);
+
+  if(Bms_TemperatureLimits[limitType].limitCategory == BMS_ERROR)
   {
-    printError("Temperature out of range!");
     return 0;
   }
+
   return 1;
 }
 
 int checkSocRange(float soc)
 {
-  if(checkOutOfRange(soc, minSocRange, maxSocRange))
+  limitType_en limitType = findValueRange(soc, (limits_st *)Bms_SocLimits);
+
+  if(Bms_SocLimits[limitType].limitCategory == BMS_ERROR)
   {
-    printError("State of Charge out of range!");
     return 0;
   }
 
@@ -45,11 +74,12 @@ int checkSocRange(float soc)
 
 int checkChargeRateRange(float chargeRate)
 {
-  if(chargeRate > maxChargeRateRange) 
+  limitType_en limitType = findValueRange(chargeRate, (limits_st *)Bms_ChargeLimits);
+
+  if(Bms_ChargeLimits[limitType].limitCategory == BMS_ERROR)
   {
-    printError("Charge Rate out of range!");
     return 0;
   }
 
   return 1;
-}
+}*/
