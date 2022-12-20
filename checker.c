@@ -7,17 +7,17 @@
 
 bmsChecker_st checkerDatabase[BMS_MAX_PARAMTERS] = {
   {
-    .limits = (limits_st *)&Bms_limitsDataBase[BMS_TEMPERATURE],
+    .limits = Bms_TemperatureLimits,
     .language = ENGLISH,
     .enableWarning = 1,
   },
   {
-    .limits = (limits_st *)&Bms_limitsDataBase[BMS_SOC],
+    .limits = Bms_SocLimits,
     .language = ENGLISH,
     .enableWarning = 1,
   },
   {
-    .limits = (limits_st *)&Bms_limitsDataBase[BMS_CHARGE_RATE],
+    .limits = Bms_ChargeLimits,
     .language = ENGLISH,
     .enableWarning = 1,
   }
@@ -26,8 +26,11 @@ bmsChecker_st checkerDatabase[BMS_MAX_PARAMTERS] = {
 int checkerInit(languages_en language, int *warningEnable)
 {
   int paramCount = 0;
+      printf("Input Addresses : %p, %p, %p\n", Bms_ChargeLimits, Bms_SocLimits, Bms_TemperatureLimits);
+
   for(paramCount = 0; paramCount < BMS_MAX_PARAMTERS; paramCount++)
   {
+    printf("Addresses %p\n", checkerDatabase[paramCount].limits);
     // select Language
     checkerDatabase[paramCount].language = language;
     // Enable or disable warning  levels

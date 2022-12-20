@@ -3,7 +3,7 @@
 
 typedef struct
 {
-    limits_st *limits;
+    const limits_st *limits;
     int enableWarning;
     languages_en language;
 

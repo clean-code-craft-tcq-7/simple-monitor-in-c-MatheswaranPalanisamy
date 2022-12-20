@@ -1,8 +1,8 @@
 #include <stdio.h>
 
 #include "bms_common.h"
-#include "bms_limits.h"
 #include "bms_alerter.h"
+#include "checker.h"
 
 static int checkRange(float value, float minVal, float maxVal)
 {
@@ -35,7 +35,7 @@ int checkAndAlertParameters(float *parameters, void (*alerter)(limitCategory_en,
   limitType_en limitType;
   for(paramCount = 0; paramCount < BMS_MAX_PARAMTERS; paramCount++)
   {
-    paramLimits = (limits_st *)&Bms_limitsDataBase[paramCount];
+    paramLimits = (limits_st *)checkerDatabase[paramCount].limits;
     limitType = findValueRange(parameters[paramCount], paramLimits);
     alertLimit(paramCount, limitType, alerter);
 
