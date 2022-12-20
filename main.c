@@ -13,7 +13,7 @@ int main() {
 
   assert(batteryIsOk(-3.5, 43, 0.4, printMessage) == 0);
   assert(batteryIsOk(0, 70, 0.7, printMessage) == 1);
-  assert(batteryIsOk(1.0, 70, 0.7, printMessage) == 1);
+  assert(batteryIsOk(0.1, 70, 0.7, printMessage) == 1);
   assert(batteryIsOk(5.0, 70, 0.7, printMessage) == 1);
   assert(batteryIsOk(40.0, 70, 0.7, printMessage) == 1);
   assert(batteryIsOk(44.9, 70, 0.7, printMessage) == 1);

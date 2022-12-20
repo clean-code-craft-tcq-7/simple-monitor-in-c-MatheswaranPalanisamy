@@ -5,7 +5,7 @@
 #include "bms_languages.h"
 #include "checker.h"
 
-static limitCategory_en findAlertCategory(limitType_en paramType, limitType_en limitType)
+static limitCategory_en findAlertCategory(bmsParameterType_en paramType, limitType_en limitType)
 {
     limits_st *paramLimits = (limits_st *)Bms_limitsDataBase[paramType];
     limitCategory_en limitCategory = BMS_VALID;
