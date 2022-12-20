@@ -40,7 +40,7 @@ static limitCategory_en getLimitCategory(limitType_en limitType, const limits_st
   }
 } 
 
-int checkAndAlertParameters(float *parameters, void (*alerter)(limitCategory_en, char *))
+int checkAndAlertParameters(float *parameters, void (*alerter)(bmsParameterType_en, limitCategory_en, char *))
 {
   int paramCount;
   const limits_st *paramLimits;

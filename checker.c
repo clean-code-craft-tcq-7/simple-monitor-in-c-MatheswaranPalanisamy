@@ -38,7 +38,7 @@ int checkerInit(languages_en language, int *warningEnable)
   return 0;
 }
 
-int batteryIsOk(float temperature, float soc, float chargeRate, void (*alerter)(limitCategory_en, char *)) 
+int batteryIsOk(float temperature, float soc, float chargeRate, void (*alerter)(bmsParameterType_en, limitCategory_en, char *)) 
 {
   float parameterArray[BMS_MAX_PARAMTERS] = {temperature, soc, chargeRate};
  

@@ -4,5 +4,5 @@
 int checkTemperatureRange(float temperature);
 int checkSocRange(float soc);
 int checkChargeRateRange(float chargeRate); */
-int checkAndAlertParameters(float *parameters, void (*alerter)(limitCategory_en, char *));
+int checkAndAlertParameters(float *parameters, void (*alerter)(bmsParameterType_en, limitCategory_en, char *));
 #endif

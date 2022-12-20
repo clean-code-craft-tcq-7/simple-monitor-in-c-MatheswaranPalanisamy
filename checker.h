@@ -9,7 +9,7 @@ typedef struct
 
 }bmsChecker_st;
 
-int batteryIsOk(float temperature, float soc, float chargeRate, void (*alerter)(limitCategory_en, char *));
+int batteryIsOk(float temperature, float soc, float chargeRate, void (*alerter)(bmsParameterType_en, limitCategory_en, char *));
 int checkerInit(languages_en language, int *warningEnable);
 
 extern bmsChecker_st checkerDatabase[BMS_MAX_PARAMTERS];
