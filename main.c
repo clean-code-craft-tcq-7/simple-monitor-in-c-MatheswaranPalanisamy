@@ -9,7 +9,7 @@ int main() {
   assert(checkerInit(GERMAN, enableWarning) == 0);
   
   // Test batterOk for success
-  assert(batteryIsOk(25, 70, 0.7, printError) == 1);
+  assert(batteryIsOk(25, 70, 0.7, printMessage) == 1);
 
   assert(batteryIsOk(-3.5, 43, 0.4, printMessage) == 0);
   assert(batteryIsOk(0, 70, 0.7, printMessage) == 1);
