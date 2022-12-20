@@ -31,13 +31,14 @@ static limitType_en findValueRange(float value, const limits_st *limits)
 int checkAndAlertParameters(float *parameters, void (*alerter)(limitCategory_en, char *))
 {
   int paramCount;
-  const limits_st *paramLimits;
+  const limits_st *paramLimits = ;
   limitType_en limitType;
   for(paramCount = 0; paramCount < BMS_MAX_PARAMTERS; paramCount++)
   {
     paramLimits = checkerDatabase[paramCount].limits;
-    limitType = findValueRange(parameters[paramCount], paramLimits);
-    alertLimit(paramCount, limitType, alerter);
+    printf("parameter limit for %d is %p", paramCount, paramLimits);
+    //limitType = findValueRange(parameters[paramCount], paramLimits);
+    //alertLimit(paramCount, limitType, alerter);
 
     if(paramLimits[limitType].limitCategory == BMS_ERROR)
     {
