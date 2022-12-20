@@ -18,12 +18,22 @@ static limitCategory_en findAlertCategory(bmsParameterType_en paramType, limitTy
     return limitCategory;
 }
 
-char *findAlertMessage(bmsParameterType_en paramType, limitType_en limitType)
+static char *findAlertMessage(bmsParameterType_en paramType, limitType_en limitType)
 {
     char **languageSet = (char **)languageDictionary[checkerDatabase[paramType].language];
     char *alertmsg = languageSet[(paramType + 1) * (limitType + 1) - 1];
 
     return alertmsg;
+}
+
+static int isWarningAlertReqired(bmsParameterType_en paramType, limitCategory_en limitCategory)
+{
+    if(limitCategory == BMS_WARNING)
+    {
+        return checkerDatabase[paramType].enableWarning;
+    }
+
+    return 1;
 }
 
 void alertLimit(bmsParameterType_en paramType, limitType_en limitType, void (*alerter)(limitCategory_en, char *))
@@ -36,6 +46,9 @@ void alertLimit(bmsParameterType_en paramType, limitType_en limitType, void (*al
     }
     else
     {
-        alerter(limitCategory, findAlertMessage(paramType, limitType));
+        if(isWarningAlertReqired(paramType, limitCategory))
+        {
+            alerter(limitCategory, findAlertMessage(paramType, limitType));
+        }
     }
 }
