@@ -1,21 +1,46 @@
 #include <stdio.h>
-#include <assert.h>
 
-int batteryIsOk(float temperature, float soc, float chargeRate) {
-  if(temperature < 0 || temperature > 45) {
-    printf("Temperature out of range!\n");
-    return 0;
-  } else if(soc < 20 || soc > 80) {
-    printf("State of Charge out of range!\n");
-    return 0;
-  } else if(chargeRate > 0.8) {
-    printf("Charge Rate out of range!\n");
-    return 0;
+#include "bms_common.h"
+#include "bms_limits.h"
+#include "checker_functions.h"
+#include "checker.h"
+
+bmsChecker_st checkerDatabase[BMS_MAX_PARAMTERS] = {
+  {
+    .limits = Bms_TemperatureLimits,
+    .language = ENGLISH,
+    .enableWarning = 1,
+  },
+  {
+    .limits = Bms_SocLimits,
+    .language = ENGLISH,
+    .enableWarning = 1,
+  },
+  {
+    .limits = Bms_ChargeLimits,
+    .language = ENGLISH,
+    .enableWarning = 1,
   }
-  return 1;
+};
+
+int checkerInit(languages_en language, int *warningEnable)
+{
+  int paramCount = 0;
+
+  for(paramCount = 0; paramCount < BMS_MAX_PARAMTERS; paramCount++)
+  {
+    // select Language
+    checkerDatabase[paramCount].language = language;
+    // Enable or disable warning  levels
+    checkerDatabase[paramCount].enableWarning = warningEnable[paramCount];
+  }
+
+  return 0;
 }
 
-int main() {
-  assert(batteryIsOk(25, 70, 0.7));
-  assert(!batteryIsOk(50, 85, 0));
+int batteryIsOk(float temperature, float soc, float chargeRate, void (*alerter)(bmsParameterType_en, limitCategory_en, char *)) 
+{
+  float parameterArray[BMS_MAX_PARAMTERS] = {temperature, soc, chargeRate};
+ 
+  return checkAndAlertParameters(parameterArray, alerter);
 }
