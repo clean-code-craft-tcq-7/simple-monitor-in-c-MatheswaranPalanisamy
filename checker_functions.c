@@ -35,7 +35,7 @@ int checkAndAlertParameters(float *parameters, void (*alerter)(limitCategory_en,
   limitType_en limitType;
   for(paramCount = 0; paramCount < BMS_MAX_PARAMTERS; paramCount++)
   {
-    paramLimits = (limits_st *)Bms_limitsDataBase[paramCount];
+    paramLimits = (limits_st *)&Bms_limitsDataBase[paramCount];
     limitType = findValueRange(parameters[paramCount], paramLimits);
     alertLimit(paramCount, limitType, alerter);
 
