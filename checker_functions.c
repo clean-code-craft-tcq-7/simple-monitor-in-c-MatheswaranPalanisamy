@@ -28,6 +28,18 @@ static limitType_en findValueRange(float value, const limits_st *limits)
   return BMS_LIMIT_VALID;
 }
 
+static limitCategory_en getLimitCategory(limitType_en limitType, const limits_st *paramLimits)
+{
+  if(limitType == BMS_LIMIT_VALID)
+  {
+    return BMS_VALID;
+  }
+  else
+  {
+    return paramLimits[limitType].limitCategory;
+  }
+} 
+
 int checkAndAlertParameters(float *parameters, void (*alerter)(limitCategory_en, char *))
 {
   int paramCount;
@@ -36,11 +48,11 @@ int checkAndAlertParameters(float *parameters, void (*alerter)(limitCategory_en,
   for(paramCount = 0; paramCount < BMS_MAX_PARAMTERS; paramCount++)
   {
     paramLimits = checkerDatabase[paramCount].limits;
-    printf("parameter limit for %d is %p", paramCount, paramLimits);
-    //limitType = findValueRange(parameters[paramCount], paramLimits);
-    //alertLimit(paramCount, limitType, alerter);
+    printf("parameter limit for %d is %p\n", paramCount, paramLimits);
+    limitType = findValueRange(parameters[paramCount], paramLimits);
+    alertLimit(paramCount, limitType, alerter);
 
-    if(paramLimits[limitType].limitCategory == BMS_ERROR)
+    if(getLimitCategory(limitType, paramLimits) == BMS_ERROR)
     {
       return 0;
     }
