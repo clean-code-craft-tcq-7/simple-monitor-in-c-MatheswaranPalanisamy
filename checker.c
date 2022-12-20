@@ -26,7 +26,7 @@ int batteryIsOk(float temperature, float soc, float chargeRate, void (*alerter)(
 {
   //int return_code = 0;
   float parameterArray[BMS_MAX_PARAMTERS] = {temperature, soc, chargeRate};
-
+  printf("Inputs %f, %f, %f\n", temperature, soc, chargeRate);
   return checkAndAlertParameters(parameterArray, alerter);
   //return_code = checkTemperatureRange(temperature) & checkSocRange(soc) & checkChargeRateRange(chargeRate);
   //return return_code;
