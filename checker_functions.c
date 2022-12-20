@@ -31,7 +31,7 @@ static limitType_en findValueRange(float value, const limits_st *limits)
 int checkAndAlertParameters(float *parameters, void (*alerter)(limitCategory_en, char *))
 {
   int paramCount;
-  const limits_st *paramLimits = ;
+  const limits_st *paramLimits;
   limitType_en limitType;
   for(paramCount = 0; paramCount < BMS_MAX_PARAMTERS; paramCount++)
   {
