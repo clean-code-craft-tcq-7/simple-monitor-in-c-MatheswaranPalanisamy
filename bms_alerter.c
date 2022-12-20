@@ -36,6 +36,6 @@ void alertLimit(bmsParameterType_en paramType, limitType_en limitType, void (*al
     }
     else
     {
-        alerter(limitCategory, findAlertMessage(paramType, limitType));
+       // alerter(limitCategory, findAlertMessage(paramType, limitType));
     }
 }
